@@ -72,29 +72,29 @@ class _HomeState extends State<Home> {
 
 
   Widget build(BuildContext context) {
+
     return Scaffold(
       backgroundColor: Colors.brown[50],
+
       appBar: AppBar(
         backgroundColor: Colors.blueAccent[400],
         title: Text('Open Unifeob'),
         elevation: 0.0,
+
+
         actions: <Widget>[
-          ButtonTheme(
-            height: 250.0,
 
-
-            buttonColor: Colors.orange,
-            child: ElevatedButton(
-
-
+            FlatButton.icon(
+              icon: Icon(Icons.add),
               onPressed: () {
                 Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => register_video()));
-              }, child: Text('Upload'),
+                    MaterialPageRoute(builder: (context) => RegisterVideo()));
+              },
+              label: Text('Upload'),
 
             ),
 
-          ),
+
           FlatButton.icon(
             icon: Icon(Icons.person),
             onPressed: () async {
