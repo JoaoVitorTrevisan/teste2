@@ -7,6 +7,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:youtube_player_iframe/youtube_player_iframe.dart';
 import 'package:teste1/models/youtube_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Home extends StatefulWidget {
 
@@ -19,6 +20,8 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+
+  CollectionReference data = FirebaseFirestore.instance.collection("data");
 
   final AuthService _auth = AuthService();
 
@@ -109,6 +112,7 @@ class _HomeState extends State<Home> {
       body: SafeArea(
         child: Column(
           children: [
+
             _buildYtbView(),
             _buildMoreVideoTitle(),
             _buildMoreVideosView(),
@@ -120,6 +124,17 @@ class _HomeState extends State<Home> {
   }
 
   //BUILDS
+
+  _fetchData(){
+    CollectionReference collectionReference = FirebaseFirestore.instance.collection('data');
+    collectionReference.snapshots().listen((snapshot) {
+
+      setState(() {
+        data = snapshot.docs[0].get('url');
+      });
+
+    });
+  }
 
   _buildYtbView() {
     return AspectRatio(
@@ -202,6 +217,9 @@ class _HomeState extends State<Home> {
             }),
       ),
     );
+
+
+
   }
 
 
