@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 import '../../services/auth.dart';
 
@@ -16,6 +17,12 @@ class RegisterVideo extends StatefulWidget {
 }
 
 class _RegisterVideoState extends State<RegisterVideo> {
+
+  CollectionReference data = FirebaseFirestore.instance.collection("data");
+
+  late String curso;
+  late String url;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,30 +41,9 @@ class _RegisterVideoState extends State<RegisterVideo> {
               children: <Widget> [
                 SizedBox(height: 20,),
                 TextFormField(
-
-                    style: const TextStyle(
-                      color: Colors.black,
-                      fontSize: 24,
-
-                    ),
-
-                    decoration: InputDecoration(
-                      hintText: "Título" ,
-                      labelText: "Título" ,
-                      labelStyle: TextStyle(color: Colors.black),
-
-                      border: OutlineInputBorder(),
-                      icon: Icon(Icons.account_box_outlined, color: Colors.black,) ,
-                      filled: true,
-                      fillColor: Colors.blue.withOpacity(0.2),
-
-                    ),
-
-                ),
-
-                SizedBox(height: 20,),
-
-                TextFormField(
+                  onChanged: (value1){
+                    curso = value1;
+                  },
 
                   style: const TextStyle(
                     color: Colors.black,
@@ -82,6 +68,9 @@ class _RegisterVideoState extends State<RegisterVideo> {
                 SizedBox(height: 20,),
 
                 TextFormField(
+                  onChanged: (value2){
+                    url = value2;
+                  },
 
                   style: const TextStyle(
                     color: Colors.black,
@@ -116,10 +105,14 @@ class _RegisterVideoState extends State<RegisterVideo> {
                     style: TextStyle(color: Colors.black, fontSize: 20),
                   ),
 
+                  onPressed: () async {
+                    await data.add({
 
+                      "curso": curso,
+                      "url": url,
 
-                  //Verifica se o e-mail é válido
-                  onPressed: () async {},
+                    });
+                  },
 
                 ),
                 ),
